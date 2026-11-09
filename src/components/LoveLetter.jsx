@@ -56,15 +56,15 @@ export default function LoveLetter({ isOpen, onClose }) {
   const displayedText = FULL_LETTER_CONTENT.slice(0, charCount);
 
   return (
-    <div 
-      className="love-letter-backdrop" 
+    <div
+      className="love-letter-backdrop"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="letter-title"
     >
-      <div 
-        className="love-letter-paper paper-unfold-animation" 
+      <div
+        className="love-letter-paper paper-unfold-animation"
         onClick={(e) => e.stopPropagation()}
         ref={letterRef}
       >
@@ -95,7 +95,7 @@ export default function LoveLetter({ isOpen, onClose }) {
               </button>
             )}
 
-            <button 
+            <button
               className="letter-close-btn"
               onClick={onClose}
               aria-label="Close love letter"
@@ -142,7 +142,7 @@ export default function LoveLetter({ isOpen, onClose }) {
           </p>
 
           <p className="final-signoff">
-            With all my love, Mumma's person 🫀
+            With all my love, Mumma 🫀
           </p>
 
           {/* Small animated glowing heart at the end of the letter as specified */}
@@ -154,7 +154,7 @@ export default function LoveLetter({ isOpen, onClose }) {
 
         {/* Action Button to Fold & Close */}
         <div className="letter-bottom-actions">
-          <button 
+          <button
             className="fold-close-btn"
             onClick={onClose}
             aria-label="Fold and close letter"

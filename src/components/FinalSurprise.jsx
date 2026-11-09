@@ -161,11 +161,7 @@ export default function FinalSurprise() {
               {surpriseStep >= 6 && (
                 <div className="revealed-signature-block fade-in-slide">
                   <p className="revealed-signoff">Forever yours. 🫂🫀</p>
-                  <p className="revealed-dedication">
-                    <span>Naga Maneesha Reddy</span>
-                    <Heart size={18} fill="#E63946" color="#E63946" className="dedication-heart" aria-hidden="true" />
-                    <span>Madhava Reddy</span>
-                  </p>
+                  <p className="revealed-dedication">Naga Maneesha Reddy❤️Madhava Reddy</p>
                 </div>
               )}
 

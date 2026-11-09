@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Heart, Sparkles, Camera, Maximize2, Upload, Trash2 } from 'lucide-react';
+import { Heart, Sparkles, Camera, Maximize2 } from 'lucide-react';
 import PhotoLightbox from './PhotoLightbox';
 
 const MEMORIES_DATA = [
   {
     id: 1,
     defaultSrc: '/photos/photo1.jpg',
-    fallbackSrc: '/photos/photo1.svg',
     caption: 'A moment I wish I could relive ❤️',
     styleType: 'polaroid',
     dateHint: 'Memory #1',
@@ -17,7 +16,6 @@ const MEMORIES_DATA = [
   {
     id: 2,
     defaultSrc: '/photos/photo2.jpg',
-    fallbackSrc: '/photos/photo2.svg',
     caption: 'My favourite smile.',
     styleType: 'clean',
     dateHint: 'Memory #2',
@@ -28,7 +26,6 @@ const MEMORIES_DATA = [
   {
     id: 3,
     defaultSrc: '/photos/photo3.jpg',
-    fallbackSrc: '/photos/photo3.svg',
     caption: 'Every memory with you is special.',
     styleType: 'polaroid',
     dateHint: 'Memory #3',
@@ -39,7 +36,6 @@ const MEMORIES_DATA = [
   {
     id: 4,
     defaultSrc: '/photos/photo4.jpg',
-    fallbackSrc: '/photos/photo4.svg',
     caption: 'You make ordinary moments beautiful.',
     styleType: 'clean',
     dateHint: 'Memory #4',
@@ -50,7 +46,6 @@ const MEMORIES_DATA = [
   {
     id: 5,
     defaultSrc: '/photos/photo5.jpg',
-    fallbackSrc: '/photos/photo5.svg',
     caption: 'My favourite person, always.',
     styleType: 'polaroid',
     dateHint: 'Memory #5',
@@ -60,23 +55,12 @@ const MEMORIES_DATA = [
   },
 ];
 
-// Fallback extension cascade
-const EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'svg'];
-
 export default function MemoriesGallery() {
   const [activePhotoIndex, setActivePhotoIndex] = useState(null);
   const [visibleItems, setVisibleItems] = useState({});
-  const [uploadMessage, setUploadMessage] = useState(null);
-
-  // Initialize sources from localStorage (if uploaded in-browser) or default paths
   const [imageSources, setImageSources] = useState(() => {
     return MEMORIES_DATA.reduce((acc, item) => {
-      try {
-        const saved = localStorage.getItem(`custom_photo_${item.id}`);
-        acc[item.id] = saved || item.defaultSrc;
-      } catch {
-        acc[item.id] = item.defaultSrc;
-      }
+      acc[item.id] = item.defaultSrc;
       return acc;
     }, {});
   });
@@ -106,71 +90,14 @@ export default function MemoriesGallery() {
     return () => observer.disconnect();
   }, []);
 
-  // Multi-extension fallback handler (jpg -> jpeg -> png -> webp -> svg)
+  // Multi-extension fallback (tries .jpg -> .jpeg -> .jpg.jpeg)
   const handleImageError = (id) => {
     const current = imageSources[id];
-    if (!current || current.startsWith('data:')) return;
-
-    const extMatch = current.match(/\.([a-z0-9]+)$/i);
-    const currentExt = extMatch ? extMatch[1].toLowerCase() : '';
-    const currentIndex = EXTENSIONS.indexOf(currentExt);
-
-    if (currentIndex >= 0 && currentIndex < EXTENSIONS.length - 1) {
-      const nextExt = EXTENSIONS[currentIndex + 1];
-      setImageSources((prev) => ({
-        ...prev,
-        [id]: `/photos/photo${id}.${nextExt}`,
-      }));
-    } else {
-      // Final fallback to svg placeholder
-      setImageSources((prev) => ({
-        ...prev,
-        [id]: `/photos/photo${id}.svg`,
-      }));
+    if (current.endsWith('.jpg')) {
+      setImageSources((prev) => ({ ...prev, [id]: `/photos/photo${id}.jpeg` }));
+    } else if (current.endsWith('.jpeg') && !current.endsWith('.jpg.jpeg')) {
+      setImageSources((prev) => ({ ...prev, [id]: `/photos/photo${id}.jpg.jpeg` }));
     }
-  };
-
-  // Instant in-browser upload handler (supports mobile camera roll & desktop files)
-  const handleFileUpload = (e, id) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith('image/')) {
-      alert('Please select a valid image file (JPG, PNG, WebP).');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result;
-      if (result) {
-        setImageSources((prev) => ({ ...prev, [id]: result }));
-        try {
-          localStorage.setItem(`custom_photo_${id}`, result);
-        } catch {
-          // localStorage quota exceeded fallback
-        }
-        setUploadMessage(`Memory #${id} updated successfully! ❤️`);
-        setTimeout(() => setUploadMessage(null), 3000);
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  // Reset custom uploaded photo back to file/svg
-  const handleResetPhoto = (e, id) => {
-    e.stopPropagation();
-    try {
-      localStorage.removeItem(`custom_photo_${id}`);
-    } catch {
-      // safe
-    }
-    setImageSources((prev) => ({
-      ...prev,
-      [id]: `/photos/photo${id}.jpg`,
-    }));
-    setUploadMessage(`Memory #${id} reset to default.`);
-    setTimeout(() => setUploadMessage(null), 3000);
   };
 
   const openLightbox = (index) => {
@@ -223,20 +150,12 @@ export default function MemoriesGallery() {
           </p>
         </div>
 
-        {/* Temporary toast notification for photo update */}
-        {uploadMessage && (
-          <div className="gallery-toast-pill" role="status">
-            <span>{uploadMessage}</span>
-          </div>
-        )}
-
         {/* Gallery Cards Grid: Scrapbook Polaroid & Clean Cards */}
         <div className="gallery-grid">
           {MEMORIES_DATA.map((item, idx) => {
             const currentSrc = imageSources[item.id];
             const isPolaroid = item.styleType === 'polaroid';
             const isVisible = visibleItems[item.id];
-            const isCustomUpload = currentSrc && currentSrc.startsWith('data:');
 
             return (
               <div
@@ -288,33 +207,6 @@ export default function MemoriesGallery() {
                   </div>
                 </div>
 
-                {/* Quick In-Browser Photo Upload Action */}
-                <div className="card-quick-actions" onClick={(e) => e.stopPropagation()}>
-                  <label 
-                    className="card-upload-pill-btn"
-                    title={`Upload your personal photo for Memory #${item.id}`}
-                  >
-                    <Upload size={12} />
-                    <span>Change Photo</span>
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      onChange={(e) => handleFileUpload(e, item.id)} 
-                      style={{ display: 'none' }}
-                    />
-                  </label>
-
-                  {isCustomUpload && (
-                    <button
-                      className="card-reset-photo-btn"
-                      onClick={(e) => handleResetPhoto(e, item.id)}
-                      title="Reset to original photo"
-                    >
-                      <Trash2 size={12} />
-                    </button>
-                  )}
-                </div>
-
                 {/* Caption Block */}
                 <div className="photo-caption-block">
                   <p className="photo-caption-text">{item.caption}</p>
@@ -326,19 +218,6 @@ export default function MemoriesGallery() {
               </div>
             );
           })}
-        </div>
-
-        {/* Helpful Photo Customization Options */}
-        <div className="gallery-custom-hint">
-          <p className="hint-text">
-            💡 <strong>3 Ways to add your photos:</strong>
-            <br />
-            1. Tap <strong>"Change Photo"</strong> on any card to select directly from your phone/PC gallery.
-            <br />
-            2. Drop files named <code>photo1.jpg</code> to <code>photo5.jpg</code> into <code>public/photos/</code>.
-            <br />
-            3. Upload your pictures directly on GitHub or in this chat and they will be deployed automatically!
-          </p>
         </div>
       </div>
 
