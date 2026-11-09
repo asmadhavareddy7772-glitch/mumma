@@ -138,11 +138,11 @@ export default function LoveLetter({ isOpen, onClose }) {
           </div>
 
           <p className="final-romantic-msg">
-            Forever grateful that you came into my life. ❤️
+            Forever grateful that you came into my life. 💗
           </p>
 
           <p className="final-signoff">
-            With all my love, Mumma 🫀
+            With all my love, Mumma
           </p>
 
           {/* Small animated glowing heart at the end of the letter as specified */}

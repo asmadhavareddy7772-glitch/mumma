@@ -2,10 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Heart, Sparkles, Camera, Maximize2 } from 'lucide-react';
 import PhotoLightbox from './PhotoLightbox';
 
+// Direct asset imports ensure Vite bundles the actual images into the deployment
+import photo1 from '../assets/photos/photo1.jpg';
+import photo2 from '../assets/photos/photo2.jpg';
+import photo3 from '../assets/photos/photo3.jpg';
+import photo4 from '../assets/photos/photo4.jpg';
+import photo5 from '../assets/photos/photo5.jpg';
+
 const MEMORIES_DATA = [
   {
     id: 1,
-    defaultSrc: '/photos/photo1.jpg',
+    defaultSrc: photo1,
+    fallbackSrc: '/photos/photo1.jpg',
     caption: 'A moment I wish I could relive ❤️',
     styleType: 'polaroid',
     dateHint: 'Memory #1',
@@ -15,7 +23,8 @@ const MEMORIES_DATA = [
   },
   {
     id: 2,
-    defaultSrc: '/photos/photo2.jpg',
+    defaultSrc: photo2,
+    fallbackSrc: '/photos/photo2.jpg',
     caption: 'My favourite smile.',
     styleType: 'clean',
     dateHint: 'Memory #2',
@@ -25,7 +34,8 @@ const MEMORIES_DATA = [
   },
   {
     id: 3,
-    defaultSrc: '/photos/photo3.jpg',
+    defaultSrc: photo3,
+    fallbackSrc: '/photos/photo3.jpg',
     caption: 'Every memory with you is special.',
     styleType: 'polaroid',
     dateHint: 'Memory #3',
@@ -35,7 +45,8 @@ const MEMORIES_DATA = [
   },
   {
     id: 4,
-    defaultSrc: '/photos/photo4.jpg',
+    defaultSrc: photo4,
+    fallbackSrc: '/photos/photo4.jpg',
     caption: 'You make ordinary moments beautiful.',
     styleType: 'clean',
     dateHint: 'Memory #4',
@@ -45,7 +56,8 @@ const MEMORIES_DATA = [
   },
   {
     id: 5,
-    defaultSrc: '/photos/photo5.jpg',
+    defaultSrc: photo5,
+    fallbackSrc: '/photos/photo5.jpg',
     caption: 'My favourite person, always.',
     styleType: 'polaroid',
     dateHint: 'Memory #5',
@@ -60,7 +72,12 @@ export default function MemoriesGallery() {
   const [visibleItems, setVisibleItems] = useState({});
   const [imageSources, setImageSources] = useState(() => {
     return MEMORIES_DATA.reduce((acc, item) => {
-      acc[item.id] = item.defaultSrc;
+      try {
+        const saved = localStorage.getItem(`mumma_custom_photo_${item.id}`);
+        acc[item.id] = saved || item.defaultSrc;
+      } catch {
+        acc[item.id] = item.defaultSrc;
+      }
       return acc;
     }, {});
   });
@@ -90,13 +107,40 @@ export default function MemoriesGallery() {
     return () => observer.disconnect();
   }, []);
 
-  // Multi-extension fallback (tries .jpg -> .jpeg -> .jpg.jpeg)
+  // Multi-tier fallback handling
   const handleImageError = (id) => {
+    const item = MEMORIES_DATA.find((m) => m.id === id);
     const current = imageSources[id];
-    if (current.endsWith('.jpg')) {
+
+    if (current === item?.defaultSrc && item?.fallbackSrc) {
+      setImageSources((prev) => ({ ...prev, [id]: item.fallbackSrc }));
+    } else if (typeof current === 'string' && current.endsWith('.jpg')) {
       setImageSources((prev) => ({ ...prev, [id]: `/photos/photo${id}.jpeg` }));
-    } else if (current.endsWith('.jpeg') && !current.endsWith('.jpg.jpeg')) {
+    } else if (typeof current === 'string' && current.endsWith('.jpeg') && !current.endsWith('.jpg.jpeg')) {
       setImageSources((prev) => ({ ...prev, [id]: `/photos/photo${id}.jpg.jpeg` }));
+    }
+  };
+
+  // Allow replacing a photo dynamically from the device
+  const handleFileChange = (id, event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setImageSources((prev) => ({ ...prev, [id]: previewUrl }));
+
+      try {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            localStorage.setItem(`mumma_custom_photo_${id}`, reader.result);
+          } catch {
+            // Storage quota handled safely
+          }
+        };
+        reader.readAsDataURL(file);
+      } catch {
+        // Fallback safely
+      }
     }
   };
 
@@ -146,7 +190,7 @@ export default function MemoriesGallery() {
           </h2>
 
           <p className="gallery-subtitle">
-            "Every little moment with you becomes a beautiful memory."
+            "Some moments become memories. Some people become everything."
           </p>
         </div>
 
@@ -205,6 +249,20 @@ export default function MemoriesGallery() {
                     <Maximize2 size={24} className="expand-icon" />
                     <span className="expand-text">View Photograph</span>
                   </div>
+                </div>
+
+                {/* Change Photo Option (Clean & Discreet) */}
+                <div className="change-photo-container" onClick={(e) => e.stopPropagation()}>
+                  <label className="change-photo-btn" title="Upload a photo for this card">
+                    <Camera size={13} />
+                    <span>Change Photo</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden-file-input"
+                      onChange={(e) => handleFileChange(item.id, e)}
+                    />
+                  </label>
                 </div>
 
                 {/* Caption Block */}
