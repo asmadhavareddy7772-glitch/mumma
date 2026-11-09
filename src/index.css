@@ -1,0 +1,110 @@
+:root {
+  /* Cinematic Romantic Color Palette strictly adhering to specifications */
+  --color-white: #FFFFFF;
+  --color-soft-blush: #FFF0F5;
+  --color-light-pink: #FFB6C1;
+  --color-romantic-pink: #F06292;
+  --color-deep-rose: #E91E63;
+  --color-heart-red: #E63946;
+  --color-dark-red: #B91C32;
+  --color-black: #000000;
+  --color-text-dark: #1A1A1A;
+  --color-text-muted: #555555;
+  --color-border-subtle: #F6D6DE;
+
+  /* Typography */
+  --font-hero: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-handwritten: 'Caveat', cursive;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Premium Shadows & Radii */
+  --shadow-subtle: 0 4px 20px rgba(230, 57, 70, 0.06);
+  --shadow-pink: 0 10px 30px rgba(240, 98, 146, 0.12);
+  --shadow-card: 0 14px 34px rgba(185, 28, 50, 0.1);
+  --shadow-envelope: 0 24px 55px rgba(185, 28, 50, 0.18), 0 8px 20px rgba(0, 0, 0, 0.05);
+  --shadow-modal: 0 32px 85px rgba(0, 0, 0, 0.24), 0 14px 35px rgba(230, 57, 70, 0.15);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--color-white);
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Romantic Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-soft-blush);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-romantic-pink);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-heart-red);
+}
+
+/* Button & Link base resets */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  touch-action: manipulation;
+  outline: none;
+}
+
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--color-heart-red);
+  outline-offset: 3px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Selection highlight */
+::selection {
+  background-color: var(--color-light-pink);
+  color: var(--color-dark-red);
+}
+
+/* Accessibility: Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#FFF0F5"/>
+      <stop offset="100%" stop-color="#FFE4E8"/>
+    </linearGradient>
+    <filter id="shadow3" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#E63946" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad3)"/>
+
+  <!-- Romantic Frame -->
+  <rect x="30" y="30" width="740" height="540" rx="20" fill="none" stroke="#FFB6C1" stroke-width="2" stroke-dasharray="6,6"/>
+  <rect x="45" y="45" width="710" height="510" rx="16" fill="none" stroke="#E63946" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Twin Interlocking Hearts -->
+  <g transform="translate(400, 260)" filter="url(#shadow3)">
+    <circle r="90" fill="#FFFFFF" opacity="0.9"/>
+    <circle r="80" fill="#FFF0F5" stroke="#FFB6C1" stroke-width="2"/>
+
+    <!-- Left Heart -->
+    <path d="M -15 -18 C -35 -40 -60 -15 -60 10 C -60 32 -15 62 -15 68 C -15 62 30 32 30 10 C 30 -15 5 -40 -15 -18 Z" fill="#E63946" transform="scale(0.65) translate(-10, -25)"/>
+    <!-- Right Heart -->
+    <path d="M 25 -18 C 5 -40 -20 -15 -20 10 C -20 32 25 62 25 68 C 25 62 70 32 70 10 C 70 -15 45 -40 25 -18 Z" fill="#E75480" opacity="0.85" transform="scale(0.65) translate(15, -15)"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="405" font-family="'Playfair Display', Georgia, serif" font-size="28" font-weight="700" fill="#000000" text-anchor="middle">
+    Every Memory With You Is Special
+  </text>
+  <text x="400" y="445" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="16" font-weight="500" fill="#B91C32" text-anchor="middle">
+    Memory #3 • Endless Warmth
+  </text>
+  <text x="400" y="485" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="13" font-weight="400" fill="#888888" text-anchor="middle">
+    (Place photo3.jpg in public/photos to display your real photo)
+  </text>
+</svg>
