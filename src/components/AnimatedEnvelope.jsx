@@ -78,7 +78,7 @@ export default function AnimatedEnvelope({ isLetterOpen, onOpenLetter }) {
           <div className={`envelope-letter-preview ${isFlapOpen ? 'slide-up-emerge' : ''}`}>
             <div className="preview-top-line">
               <span className="mini-heart">❤️</span>
-              <span className="mini-salutation">For Naga Maneesha Reddy</span>
+              <span className="mini-salutation">For Nagamahisha Reddy</span>
               <span className="mini-heart">❤️</span>
             </div>
             <div className="preview-text-skeleton">

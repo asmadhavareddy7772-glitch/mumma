@@ -48,7 +48,7 @@ export default function BirthdayHero({ isLetterOpen, onOpenLetter, onReplayIntro
             </span>
 
             <h2 className="hero-person-name">
-              NAGA MANEESHA REDDY
+              NAGAMAHISHA REDDY
             </h2>
 
             <span className="decorative-heart right-heart" aria-hidden="true">

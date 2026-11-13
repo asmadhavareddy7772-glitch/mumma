@@ -117,7 +117,7 @@ export default function LoveLetter({ isOpen, onClose }) {
             <span className="line"></span>
           </div>
           <h2 id="letter-title" className="letter-salutation">
-            My Dearest Naga Maneesha Reddy,
+            My Dearest Nagamahisha Reddy,
           </h2>
         </div>
 

@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Heart, Sparkles, FastForward } from 'lucide-react';
 
 export default function CinematicIntro({ onComplete }) {
-  // Step tracking: 1 = glowing particles, 2 = floating hearts, 3 = "Someone special...", 4 = "HAPPIEST BIRTHDAY MUMMA", 5 = "NAGA MANEESHA REDDY", 6 = Glowing Heart, 7 = Complete
+  // Step tracking: 1 = glowing particles, 2 = floating hearts, 3 = "Someone special...", 4 = "HAPPIEST BIRTHDAY MUMMA", 5 = "NAGAMAHISHA REDDY", 6 = Glowing Heart, 7 = Complete
   const [step, setStep] = useState(1);
   const [displayedTitle, setDisplayedTitle] = useState('');
   const [displayedName, setDisplayedName] = useState('');
 
   const FULL_TITLE = "HAPPIEST BIRTHDAY MUMMA";
-  const FULL_NAME = "NAGA MANEESHA REDDY";
+  const FULL_NAME = "NAGAMAHISHA REDDY";
 
   useEffect(() => {
     // Timeline orchestration
@@ -47,7 +47,7 @@ export default function CinematicIntro({ onComplete }) {
     }
   }, [step]);
 
-  // Typewriter reveal for NAGA MANEESHA REDDY
+  // Typewriter reveal for NAGAMAHISHA REDDY
   useEffect(() => {
     if (step >= 5) {
       let index = 0;
@@ -115,7 +115,7 @@ export default function CinematicIntro({ onComplete }) {
           </h1>
         )}
 
-        {/* Step 5: "NAGA MANEESHA REDDY" */}
+        {/* Step 5: "NAGAMAHISHA REDDY" */}
         {step >= 5 && (
           <h2 className="intro-person-name typewriter-glow">
             {displayedName}

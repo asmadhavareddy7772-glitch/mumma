@@ -1,6 +1,6 @@
-# 💖 Advanced Cinematic Romantic Birthday Experience for Naga Maneesha Reddy
+# 💖 Advanced Cinematic Romantic Birthday Experience for Nagamahisha Reddy
 
-A world-class, cinematic, emotionally immersive birthday website dedicated to **Naga Maneesha Reddy** for her special day on **20 November**.
+A world-class, cinematic, emotionally immersive birthday website dedicated to **Nagamahisha Reddy** for her special day on **20 November**.
 
 Built with love, care, deep emotions, and premium interactive web craftsmanship.
 
@@ -15,7 +15,7 @@ When the website first loads:
 * **Step 3**: The teaser appears with a blur-to-clear transition:
   > *"Someone special deserves something special..."*
 * **Step 4**: Bold reveal of **`HAPPIEST BIRTHDAY MUMMA`** in uppercase black typography with letter-by-letter reveal and scale-up glow.
-* **Step 5**: Staggered typewriter reveal of **`NAGA MANEESHA REDDY`** in romantic deep pink.
+* **Step 5**: Staggered typewriter reveal of **`NAGAMAHISHA REDDY`** in romantic deep pink.
 * **Step 6**: An animated beating heart appears underneath with glowing radial aura.
 * **Step 7**: The 3D floating envelope smoothly emerges into view.
 * Includes a **"Skip Intro"** button and a **"Replay Intro ↺"** option in the hero section.
@@ -147,7 +147,7 @@ When she clicks **"ONE LAST THING, MUMMA ❤️"**:
 3. **Deploy to Vercel**:
    ```powershell
    git add .
-   git commit -m "Advanced cinematic birthday upgrade for Naga Maneesha Reddy ❤️"
+   git commit -m "Advanced cinematic birthday upgrade for Nagamahisha Reddy ❤️"
    git push origin main
    ```
    Import into [vercel.com](https://vercel.com) and click **Deploy**.

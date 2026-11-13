@@ -47,7 +47,7 @@ export default function Navigation() {
           className="nav-brand"
           aria-label="Go to top"
         >
-          <span className="brand-text">Naga Maneesha Reddy</span>
+          <span className="brand-text">Nagamahisha Reddy</span>
           <span className="brand-heart-pulse" aria-hidden="true">
             <Heart size={16} fill="#E63946" color="#E63946" />
           </span>

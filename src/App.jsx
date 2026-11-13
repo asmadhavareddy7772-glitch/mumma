@@ -60,7 +60,7 @@ export default function App() {
       <footer className="romantic-footer">
         <div className="footer-content">
           <p className="footer-love-text">
-            Crafted with all my love for Naga Maneesha Reddy
+            Crafted with all my love for Nagamahisha Reddy
             <Heart size={15} fill="#E63946" color="#E63946" className="footer-inline-heart" />
           </p>
           <p className="footer-date-text">
